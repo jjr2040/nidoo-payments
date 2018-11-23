@@ -9,6 +9,7 @@ router.post('/zonefee', (req, res) => {
   ZoneFee.findOne({ zone: req.body.zone }, (err, zoneFee) => {
     if (zoneFee) {
       zoneFee.fee = req.body.fee;
+      zoneFee.save();
       res.status(201).send(zoneFee);
     } else {
       let newZoneFee = new ZoneFee(req.body);
