@@ -1,5 +1,6 @@
 const express = require('express');
 const ZoneFee = require('../schemas/ZoneFee');
+const helper = require('sendgrid').mail;
 
 const router = express.Router();
 
@@ -19,6 +20,24 @@ router.post('/zonefee', (req, res) => {
   });
 
   
+  const from_email = new helper.Email('jj.villegas47@uniandes.edu.co');
+  const to_email = new helper.Email('jj.villegas47@uniandes.edu.co');
+  const subject = 'Nidoo: Han cambiado las tarifas por zona';
+  const content = new helper.Content('text/plain', 'Han cambiado las tarifas por zona. Verifica que no haya sido un error');
+  const mail = new helper.Mail(from_email, subject, to_email, content);
+
+  const sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+  const request = sg.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: mail.toJSON(),
+  });
+
+  sg.API(request, function(error, response) {
+    console.log(response.statusCode);
+    console.log(response.body);
+    console.log(response.headers);
+  });
 });
 
 module.exports = router;
