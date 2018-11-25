@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 
 const zoneFeeModel = new Schema({
     fee: Number,
-    zone: String
+    zone: String,
+    createdAt: Date,
+    createdBy: String
 });
 
 module.exports = mongoose.model('ZoneFee', zoneFeeModel);

@@ -7,16 +7,23 @@ const router = express.Router();
 //Booking api
 router.post('/zonefee', (req, res) => {
 
-  ZoneFee.findOne({ zone: req.body.zone }, (err, zoneFee) => {
-    if (zoneFee) {
-      zoneFee.fee = req.body.fee;
-      zoneFee.save();
-      res.status(201).send(zoneFee);
-    } else {
-      let newZoneFee = new ZoneFee(req.body);
-      newZoneFee.save();
-      res.status(201).send(newZoneFee);
-    }
+  let newZoneFee = new ZoneFee(req.body);
+  newZoneFee.createdAt = Date();
+  newZoneFee.createdBy = "5bf89a8c5c25b800235e18c9";
+  newZoneFee.save();
+  console.log(`User with id: ${newZoneFee.createdBy} created a new zone fee`);
+  res.status(201).send(newZoneFee);
+
+  // ZoneFee.findOne({ zone: req.body.zone }, (err, zoneFee) => {
+  //   if (zoneFee) {
+  //     zoneFee.fee = req.body.fee;
+  //     zoneFee.save();
+  //     res.status(201).send(zoneFee);
+  //   } else {
+  //     let newZoneFee = new ZoneFee(req.body);
+  //     newZoneFee.save();
+  //     res.status(201).send(newZoneFee);
+  //   }
   });
 
   
